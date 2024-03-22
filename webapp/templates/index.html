@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flipkart Sentiment Analysis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 500px;
+            max-width: 90%;
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            height: 100px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result p strong {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .result p strong.positive {
+            color: #28a745; 
+        }
+        .result p strong.negative {
+            color: #dc3545; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Flipkart Sentiment Analysis</h1>
+        {% if sentiment %}
+            <div class="result">
+                <h2>Analysis Result</h2>
+                <p>Your review sentiment is: <strong class="{{ sentiment }}">{{ sentiment }}</strong></p>
+                <p>Review: "{{ review }}"</p>
+                <a href="/">Back to Home</a>
+            </div>
+        {% else %}
+            <form action="/predict" method="post" onsubmit="return validateForm()">
+                <label for="review">Enter your review:</label><br>
+                <textarea id="review" name="review" placeholder="Type your review here..."></textarea><br>
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+    </div>
+    <script>
+        function validateForm() {
+            var x = document.forms[0]["review"].value;
+            if (x == "") {
+                alert("Review must be filled out");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+</html>
